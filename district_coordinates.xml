@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<districts>
+    <district name="Colombo">
+        <latitude>6.9271</latitude>
+        <longitude>79.8612</longitude>
+        <aliases>
+            <alias>colombo</alias>
+            <alias>col</alias>
+            <alias>cmb</alias>
+        </aliases>
+    </district>
+    <district name="Gampaha">
+        <latitude>7.0906</latitude>
+        <longitude>79.9956</longitude>
+        <aliases>
+            <alias>gampaha</alias>
+            <alias>gmp</alias>
+        </aliases>
+    </district>
+    <district name="Kalutara">
+        <latitude>6.5854</latitude>
+        <longitude>79.9607</longitude>
+        <aliases>
+            <alias>kalutara</alias>
+            <alias>kal</alias>
+        </aliases>
+    </district>
+    <district name="Kandy">
+        <latitude>7.2906</latitude>
+        <longitude>80.6337</longitude>
+        <aliases>
+            <alias>kandy</alias>
+            <alias>knd</alias>
+            <alias>mahanuwara</alias>
+        </aliases>
+    </district>
+    <district name="Matale">
+        <latitude>7.4675</latitude>
+        <longitude>80.6234</longitude>
+        <aliases>
+            <alias>matale</alias>
+            <alias>mtl</alias>
+        </aliases>
+    </district>
+    <district name="Nuwara Eliya">
+        <latitude>6.9497</latitude>
+        <longitude>80.7891</longitude>
+        <aliases>
+            <alias>nuwara eliya</alias>
+            <alias>nuwara</alias>
+            <alias>eliya</alias>
+            <alias>nuwaraeliya</alias>
+            <alias>ne</alias>
+        </aliases>
+    </district>
+    <district name="Galle">
+        <latitude>6.0329</latitude>
+        <longitude>80.217</longitude>
+        <aliases>
+            <alias>galle</alias>
+            <alias>gll</alias>
+        </aliases>
+    </district>
+    <district name="Matara">
+        <latitude>5.9549</latitude>
+        <longitude>80.5550</longitude>
+        <aliases>
+            <alias>matara</alias>
+            <alias>mtr</alias>
+        </aliases>
+    </district>
+    <district name="Hambantota">
+        <latitude>6.1241</latitude>
+        <longitude>81.1185</longitude>
+        <aliases>
+            <alias>hambantota</alias>
+            <alias>hbt</alias>
+        </aliases>
+    </district>
+    <district name="Jaffna">
+        <latitude>9.6615</latitude>
+        <longitude>80.0255</longitude>
+        <aliases>
+            <alias>jaffna</alias>
+            <alias>jfn</alias>
+            <alias>yalpanam</alias>
+        </aliases>
+    </district>
+    <district name="Kilinochchi">
+        <latitude>9.3961</latitude>
+        <longitude>80.4037</longitude>
+        <aliases>
+            <alias>kilinochchi</alias>
+            <alias>kln</alias>
+        </aliases>
+    </district>
+    <district name="Mannar">
+        <latitude>8.9814</latitude>
+        <longitude>79.9037</longitude>
+        <aliases>
+            <alias>mannar</alias>
+            <alias>mnr</alias>
+        </aliases>
+    </district>
+    <district name="Mullaitivu">
+        <latitude>9.2673</latitude>
+        <longitude>80.8142</longitude>
+        <aliases>
+            <alias>mullaitivu</alias>
+            <alias>mlt</alias>
+        </aliases>
+    </district>
+    <district name="Vavuniya">
+        <latitude>8.7514</latitude>
+        <longitude>80.4971</longitude>
+        <aliases>
+            <alias>vavuniya</alias>
+            <alias>vvn</alias>
+        </aliases>
+    </district>
+    <district name="Puttalam">
+        <latitude>8.0362</latitude>
+        <longitude>79.8283</longitude>
+        <aliases>
+            <alias>puttalam</alias>
+            <alias>ptl</alias>
+        </aliases>
+    </district>
+    <district name="Kurunegala">
+        <latitude>7.4863</latitude>
+        <longitude>80.3623</longitude>
+        <aliases>
+            <alias>kurunegala</alias>
+            <alias>krg</alias>
+        </aliases>
+    </district>
+    <district name="Anuradhapura">
+        <latitude>8.3114</latitude>
+        <longitude>80.4037</longitude>
+        <aliases>
+            <alias>anuradhapura</alias>
+            <alias>anp</alias>
+            <alias>anuradhapuraya</alias>
+        </aliases>
+    </district>
+    <district name="Polonnaruwa">
+        <latitude>7.9403</latitude>
+        <longitude>81.0188</longitude>
+        <aliases>
+            <alias>polonnaruwa</alias>
+            <alias>pol</alias>
+        </aliases>
+    </district>
+    <district name="Badulla">
+        <latitude>6.9934</latitude>
+        <longitude>81.0550</longitude>
+        <aliases>
+            <alias>badulla</alias>
+            <alias>bdl</alias>
+        </aliases>
+    </district>
+    <district name="Moneragala">
+        <latitude>6.8714</latitude>
+        <longitude>81.3510</longitude>
+        <aliases>
+            <alias>moneragala</alias>
+            <alias>mng</alias>
+        </aliases>
+    </district>
+    <district name="Ratnapura">
+        <latitude>6.6828</latitude>
+        <longitude>80.4034</longitude>
+        <aliases>
+            <alias>ratnapura</alias>
+            <alias>rtp</alias>
+            <alias>gem city</alias>
+        </aliases>
+    </district>
+    <district name="Kegalle">
+        <latitude>7.2513</latitude>
+        <longitude>80.3464</longitude>
+        <aliases>
+            <alias>kegalle</alias>
+            <alias>kgl</alias>
+        </aliases>
+    </district>
+    <district name="Batticaloa">
+        <latitude>7.7102</latitude>
+        <longitude>81.6924</longitude>
+        <aliases>
+            <alias>batticaloa</alias>
+            <alias>btc</alias>
+        </aliases>
+    </district>
+    <district name="Ampara">
+        <latitude>7.2976</latitude>
+        <longitude>81.6747</longitude>
+        <aliases>
+            <alias>ampara</alias>
+            <alias>amp</alias>
+        </aliases>
+    </district>
+    <district name="Trincomalee">
+        <latitude>8.5778</latitude>
+        <longitude>81.2335</longitude>
+        <aliases>
+            <alias>trincomalee</alias>
+            <alias>tcm</alias>
+            <alias>trinco</alias>
+        </aliases>
+    </district>
+    <district name="Negombo">
+        <latitude>7.2083</latitude>
+        <longitude>79.8358</longitude>
+        <aliases>
+            <alias>negombo</alias>
+            <alias>ngb</alias>
+        </aliases>
+    </district>
+    <district name="Panadura">
+        <latitude>6.7132</latitude>
+        <longitude>79.9026</longitude>
+        <aliases>
+            <alias>panadura</alias>
+            <alias>pnd</alias>
+        </aliases>
+    </district>
+    <district name="Moratuwa">
+        <latitude>6.7730</latitude>
+        <longitude>79.8816</longitude>
+        <aliases>
+            <alias>moratuwa</alias>
+            <alias>mrt</alias>
+        </aliases>
+    </district>
+    <district name="Dehiwala">
+        <latitude>6.8561</latitude>
+        <longitude>79.8630</longitude>
+        <aliases>
+            <alias>dehiwala</alias>
+            <alias>dhw</alias>
+            <alias>dehiwala mount lavinia</alias>
+        </aliases>
+    </district>
+    <district name="Mount Lavinia">
+        <latitude>6.8421</latitude>
+        <longitude>79.8631</longitude>
+        <aliases>
+            <alias>mount lavinia</alias>
+            <alias>ml</alias>
+            <alias>lavinia</alias>
+        </aliases>
+    </district>
+    <district name="Kotte">
+        <latitude>6.8905</latitude>
+        <longitude>79.9015</longitude>
+        <aliases>
+            <alias>kotte</alias>
+            <alias>sri jayawardenepura</alias>
+            <alias>jayawardenepura</alias>
+        </aliases>
+    </district>
+    <district name="Maharagama">
+        <latitude>6.8480</latitude>
+        <longitude>79.9267</longitude>
+        <aliases>
+            <alias>maharagama</alias>
+            <alias>mhg</alias>
+        </aliases>
+    </district>
+    <district name="Kesbewa">
+        <latitude>6.8132</latitude>
+        <longitude>79.9267</longitude>
+        <aliases>
+            <alias>kesbewa</alias>
+            <alias>ksb</alias>
+        </aliases>
+    </district>
+    <district name="Homagama">
+        <latitude>6.8444</latitude>
+        <longitude>80.0024</longitude>
+        <aliases>
+            <alias>homagama</alias>
+            <alias>hmg</alias>
+        </aliases>
+    </district>
+    <district name="Kaduwela">
+        <latitude>6.9333</latitude>
+        <longitude>79.9833</longitude>
+        <aliases>
+            <alias>kaduwela</alias>
+            <alias>kdw</alias>
+        </aliases>
+    </district>
+</districts>
