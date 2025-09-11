@@ -622,6 +622,75 @@ def order_wsdl():
         return Response(wsdl_content, content_type='text/xml')
     return "SOAP Service"
 
+@app.route('/api/updateStatus', methods=['POST'])
+def update_order_status():
+    """SOAP/XML endpoint to update order status using only orderID and status tags.
+    Accepts raw XML (optionally wrapped in SOAP envelope)."""
+    try:
+        if client is None:
+            response_body = '<update_status_response><status>Error</status><message>Database connection not available</message></update_status_response>'
+            return Response(create_soap_response(response_body), content_type='text/xml')
+
+        try:
+            root = ET.fromstring(request.data)
+        except Exception as e:
+            response_body = f'<update_status_response><status>Error</status><message>Invalid XML: {str(e)}</message></update_status_response>'
+            return Response(create_soap_response(response_body), content_type='text/xml')
+        # Helper to match by local-name ignoring namespaces
+        def first_by_local_name(root_elem, local_name):
+            for el in root_elem.iter():
+                if el.tag.split('}')[-1] == local_name:
+                    return el
+            return None
+
+        # Narrow scope to <update_order_status> if present to avoid picking up other <status> nodes
+        update_node = first_by_local_name(root, 'update_order_status') or root
+
+        order_id = None
+        status_value = None
+
+        # Prefer direct children of update_order_status
+        for child in list(update_node):
+            local = child.tag.split('}')[-1]
+            if local == 'orderID':
+                order_id = (child.text or '').strip()
+            elif local == 'status':
+                status_value = (child.text or '').strip()
+
+        # Fallback if not found
+        if not order_id:
+            order_id = (extract_text_by_tag_name(root, 'orderID') or '').strip()
+        if not status_value:
+            status_value = (extract_text_by_tag_name(root, 'status') or '').strip()
+
+        if not order_id or not status_value:
+            response_body = '<update_status_response><status>Error</status><message>Missing required fields: orderID and status</message></update_status_response>'
+            return Response(create_soap_response(response_body), content_type='text/xml')
+
+        # Validate non-empty after stripping whitespace
+        if status_value == '':
+            response_body = '<update_status_response><status>Error</status><message>Status value is empty</message></update_status_response>'
+            return Response(create_soap_response(response_body), content_type='text/xml')
+
+        order = orders_collection.find_one({"orderID": order_id})
+        if not order:
+            response_body = '<update_status_response><status>Error</status><message>Order not found</message></update_status_response>'
+            return Response(create_soap_response(response_body), content_type='text/xml')
+
+        try:
+            orders_collection.update_one({"orderID": order_id}, {"$set": {"status": status_value, "updated_at": datetime.utcnow()}})
+            print(f"[updateStatus] Updated order {order_id} to status '{status_value}'")
+        except Exception as e:
+            response_body = f'<update_status_response><status>Error</status><message>Database error: {str(e)}</message></update_status_response>'
+            return Response(create_soap_response(response_body), content_type='text/xml')
+
+        response_body = f'''<update_status_response>\n            <status>Success</status>\n            <orderID>{order_id}</orderID>\n            <new_status>{status_value}</new_status>\n            <message>Order status updated successfully</message>\n        </update_status_response>'''
+        return Response(create_soap_response(response_body), content_type='text/xml')
+    except Exception as e:
+        print(f"Error in update_status endpoint: {str(e)}")
+        response_body = f'<update_status_response><status>Error</status><message>Internal server error: {str(e)}</message></update_status_response>'
+        return Response(create_soap_response(response_body), content_type='text/xml', status=500)
+
 if __name__ == '__main__':
     print("CMS SOAP Server listening on http://127.0.0.1:8000")
     print("Available SOAP endpoints:")
@@ -637,5 +706,6 @@ if __name__ == '__main__':
     print("  - Order WSDL: GET http://127.0.0.1:8000/orderService?wsdl")
     print("  - Get All Orders: GET http://127.0.0.1:8000/getOrders/<customerID>")
     print("    * Returns all orders for a specific customer in SOAP/XML format")
+    print("  - Update Order Status: POST http://127.0.0.1:8000/api/updateStatus (orderID, status)")
     
     app.run(host='127.0.0.1', port=8000, debug=True)
