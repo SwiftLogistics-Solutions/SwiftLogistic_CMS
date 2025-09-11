@@ -691,6 +691,86 @@ def update_order_status():
         response_body = f'<update_status_response><status>Error</status><message>Internal server error: {str(e)}</message></update_status_response>'
         return Response(create_soap_response(response_body), content_type='text/xml', status=500)
 
+@app.route('/getDeliveryLocation', methods=['POST'])
+def get_delivery_location():
+    """SOAP/XML endpoint to get delivery location for an order.
+    Finds customer_id from orders table, then retrieves current_location from customers table."""
+    try:
+        if client is None:
+            response_body = '<get_delivery_location_response><status>Error</status><message>Database connection not available</message></get_delivery_location_response>'
+            return Response(create_soap_response(response_body), content_type='text/xml')
+        
+        # Parse incoming SOAP request to extract orderID
+        try:
+            root = ET.fromstring(request.data)
+        except Exception as e:
+            response_body = f'<get_delivery_location_response><status>Error</status><message>Invalid XML: {str(e)}</message></get_delivery_location_response>'
+            return Response(create_soap_response(response_body), content_type='text/xml')
+        
+        orderID = extract_text_by_tag_name(root, 'orderID')
+        
+        if not orderID:
+            response_body = '<get_delivery_location_response><status>Error</status><message>Order ID is required in payload</message></get_delivery_location_response>'
+            return Response(create_soap_response(response_body), content_type='text/xml')
+        
+        # Find the order to get customer_id
+        order = orders_collection.find_one({"orderID": orderID})
+        if not order:
+            response_body = '<get_delivery_location_response><status>Error</status><message>Order not found</message></get_delivery_location_response>'
+            return Response(create_soap_response(response_body), content_type='text/xml')
+        
+        customer_id = order.get('customer_id')
+        if not customer_id:
+            response_body = '<get_delivery_location_response><status>Error</status><message>Customer ID not found in order</message></get_delivery_location_response>'
+            return Response(create_soap_response(response_body), content_type='text/xml')
+        
+        # Find the customer to get current_location
+        customer = customers_collection.find_one({"customer_id": customer_id})
+        if not customer:
+            response_body = '<get_delivery_location_response><status>Error</status><message>Customer not found</message></get_delivery_location_response>'
+            return Response(create_soap_response(response_body), content_type='text/xml')
+        
+        current_location = customer.get('current_location', {})
+        if not current_location:
+            response_body = '<get_delivery_location_response><status>Error</status><message>No delivery location found for customer</message></get_delivery_location_response>'
+            return Response(create_soap_response(response_body), content_type='text/xml')
+        
+        print(f"[getDeliveryLocation] Retrieved delivery location for order {orderID}, customer {customer_id}")
+        
+        # Extract additional customer and order information
+        customer_name = customer.get('name', '')
+        customer_phone = customer.get('phone', '')
+        order_priority = order.get('priority', '')
+        order_status = order.get('status', '')
+        
+        # Build location XML
+        address = current_location.get('address', '')
+        latitude = current_location.get('latitude', '')
+        longitude = current_location.get('longitude', '')
+        
+        response_body = f'''<get_delivery_location_response>
+            <status>Success</status>
+            <orderID>{orderID}</orderID>
+            <customer_id>{customer_id}</customer_id>
+            <customer_name>{customer_name}</customer_name>
+            <customer_phone>{customer_phone}</customer_phone>
+            <priority>{order_priority}</priority>
+            <order_status>{order_status}</order_status>
+            <delivery_location>
+                <address>{address}</address>
+                <latitude>{latitude}</latitude>
+                <longitude>{longitude}</longitude>
+            </delivery_location>
+            <message>Delivery location retrieved successfully</message>
+        </get_delivery_location_response>'''
+        
+        return Response(create_soap_response(response_body), content_type='text/xml')
+        
+    except Exception as e:
+        print(f"Error in get_delivery_location endpoint: {str(e)}")
+        response_body = f'<get_delivery_location_response><status>Error</status><message>Internal server error: {str(e)}</message></get_delivery_location_response>'
+        return Response(create_soap_response(response_body), content_type='text/xml', status=500)
+
 if __name__ == '__main__':
     print("CMS SOAP Server listening on http://127.0.0.1:8000")
     print("Available SOAP endpoints:")
@@ -707,5 +787,7 @@ if __name__ == '__main__':
     print("  - Get All Orders: GET http://127.0.0.1:8000/getOrders/<customerID>")
     print("    * Returns all orders for a specific customer in SOAP/XML format")
     print("  - Update Order Status: POST http://127.0.0.1:8000/api/updateStatus (orderID, status)")
+    print("  - Get Delivery Location: POST http://127.0.0.1:8000/getDeliveryLocation (orderID in payload)")
+    print("    * Returns delivery location for an order by finding customer's current_location")
     
     app.run(host='127.0.0.1', port=8000, debug=True)
