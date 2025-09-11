@@ -742,6 +742,7 @@ def get_delivery_location():
         customer_phone = customer.get('phone', '')
         order_priority = order.get('priority', '')
         order_status = order.get('status', '')
+        total_amount = order.get('totalAmount', 'N/A')
         
         # Build location XML
         address = current_location.get('address', '')
@@ -756,6 +757,7 @@ def get_delivery_location():
             <customer_phone>{customer_phone}</customer_phone>
             <priority>{order_priority}</priority>
             <order_status>{order_status}</order_status>
+            <totalAmount>{total_amount}</totalAmount>
             <delivery_location>
                 <address>{address}</address>
                 <latitude>{latitude}</latitude>
