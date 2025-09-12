@@ -143,7 +143,6 @@ def create_customer_in_db(firebase_uid, name, email, phone, current_location=Non
             "customer_id": generate_customer_id(firebase_uid),
             "phone": phone,
             "current_location": current_location or {},
-            "order_history": [],
             "created_at": datetime.utcnow(),
             "updated_at": datetime.utcnow()
         }
@@ -373,6 +372,7 @@ def order_soap_service():
                         name = None
                         quantity = None
                         price = None
+                        image = None
                         
                         for child in item_elem:
                             if child.tag.endswith('product_id'):
@@ -383,13 +383,16 @@ def order_soap_service():
                                 quantity = int(child.text) if child.text else 1
                             elif child.tag.endswith('price'):
                                 price = float(child.text) if child.text else 0.0
+                            elif child.tag.endswith('image'):
+                                image = child.text
                         
                         if product_id and name:
                             items.append({
                                 "product_id": product_id,
                                 "name": name,
                                 "quantity": quantity or 1,
-                                "price": price or 0.0
+                                "price": price or 0.0,
+                                "image": image or ""
                             })
                 
                 # Create order document
@@ -459,6 +462,7 @@ def order_soap_service():
                                 <name>{item.get('name', '')}</name>
                                 <quantity>{item.get('quantity', 0)}</quantity>
                                 <price>{item.get('price', 0)}</price>
+                                <image>{item.get('image', '')}</image>
                             </item>'''
                     
                     created_at = order.get('created_at', '')
@@ -513,6 +517,7 @@ def order_soap_service():
                             <name>{item.get('name', '')}</name>
                             <quantity>{item.get('quantity', 0)}</quantity>
                             <price>{item.get('price', 0)}</price>
+                            <image>{item.get('image', '')}</image>
                         </item>'''
                 
                 created_at = order.get('created_at', '')
@@ -573,6 +578,7 @@ def get_all_orders_by_customer(customerID):
                         <name>{item.get('name', '')}</name>
                         <quantity>{item.get('quantity', 0)}</quantity>
                         <price>{item.get('price', 0)}</price>
+                        <image>{item.get('image', '')}</image>
                     </item>'''
             
             created_at = order.get('created_at', '')
